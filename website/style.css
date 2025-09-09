@@ -1,0 +1,434 @@
+/* Dashboard Styles */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f6f8;
+}
+.dashboard {
+    display: flex;
+    height: 100vh;
+}
+.main {
+    flex: 1;
+    padding: 40px;
+}
+.main h1 {
+    color: #2e7d32;
+}
+
+/* Modal Styles for Login and Sign Up */
+html, body {
+    width: 100vw;
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(44, 165, 141, 0.18); /* subtle green overlay, no blue */
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #fff;
+    border-radius: 24px;
+    box-shadow: 0 4px 32px rgba(44, 165, 141, 0.18);
+    z-index: 101;
+    min-width: 350px;
+    max-width: 400px;
+    padding: 32px 32px 24px 32px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+.modal-content {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+.modal-content h2 {
+    color: #388e3c;
+    font-size: 2rem;
+    font-weight: 900;
+    text-align: center;
+    margin-bottom: 12px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.modal-desc {
+    color: #388e3c;
+    font-size: 1.1rem;
+    text-align: center;
+    margin-bottom: 18px;
+}
+.input-group {
+    display: flex;
+    align-items: center;
+    background: #f3fef7;
+    border-radius: 12px;
+    padding: 10px 16px;
+    margin-bottom: 16px;
+    border: 1.5px solid #e0f2e9;
+}
+.input-icon {
+    margin-right: 12px;
+    display: flex;
+    align-items: center;
+    color: #388e3c;
+}
+.input-group input {
+    border: none;
+    background: transparent;
+    outline: none;
+    font-size: 1.08rem;
+    color: #222;
+    width: 100%;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.modal-terms {
+    display: flex;
+    align-items: center;
+    margin-bottom: 18px;
+    font-size: 1rem;
+    color: #222;
+}
+.modal-terms input[type="checkbox"] {
+    margin-right: 8px;
+}
+.modal-terms label {
+    font-size: 1rem;
+    color: #222;
+}
+.modal-terms a {
+    color: #2ca58d;
+    text-decoration: underline;
+}
+.modal-signin {
+    background: #2ca58d;
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    padding: 14px 0;
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin-top: 8px;
+    cursor: pointer;
+    transition: background 0.2s;
+    width: 100%;
+    box-shadow: 0 2px 8px rgba(44, 165, 141, 0.08);
+}
+.modal-signin:hover {
+    background: #388e3c;
+}
+.close {
+    position: absolute;
+    top: 18px;
+    right: 24px;
+    font-size: 1.5rem;
+    color: #388e3c;
+    cursor: pointer;
+    font-weight: bold;
+    background: none;
+    border: none;
+    z-index: 102;
+}
+/* Carousel Styles (no arrows or slide descriptions) */
+.slideshow-container {
+    position: relative;
+    width: 100vw;
+    max-width: 100vw;
+    height: 100vh;
+    margin: 0 auto;
+    overflow: hidden;
+    box-sizing: border-box;
+    left: 0;
+    transform: none;
+}
+.slide {
+    display: none;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    transition: opacity 0.5s;
+}
+.slide.active {
+    display: block;
+    opacity: 1;
+    z-index: 2;
+}
+.slide img {
+    width: 100vw;
+    max-width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    transform: none;
+    filter: blur(4px);
+}
+.slideshow-indicators {
+    position: absolute;
+    bottom: 18px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 12px;
+    z-index: 5;
+}
+.indicator {
+    width: 16px;
+    height: 16px;
+    background: #fff;
+    border-radius: 50%;
+    opacity: 0.5;
+    cursor: pointer;
+    transition: opacity 0.2s, background 0.2s;
+    border: 2px solid #2ca58d;
+}
+.indicator.active {
+    opacity: 1;
+    background: #2ca58d;
+}
+.hero-content {
+    position: absolute;
+    top: 50%;
+    left: 6vw;
+    transform: translateY(-50%);
+    color: #fff;
+    text-align: left;
+    z-index: 10;
+    width: 600px;
+    max-width: 90vw;
+    padding: 0 16px;
+}
+
+ .hero-content h1 {
+     font-family: 'Luckiest Guy', 'Bebas Neue', Impact, Arial, sans-serif;
+     font-size: clamp(2.5rem, 6vw, 4rem);
+     color: #fff;
+     font-weight: 900;
+     text-transform: uppercase;
+     margin-bottom: 12px;
+     letter-spacing: 2px;
+     line-height: 1.1;
+     text-align: left;
+}
+
+ .hero-content p {
+     font-size: 1.25rem;
+     color: #fff;
+     margin-bottom: 24px;
+     font-family: 'Roboto', Arial, sans-serif;
+     font-weight: 400;
+     text-align: left;
+}
+
+ .hero-content .hero-btn {
+     background: #2ca58d;
+     color: #fff;
+     border: 3px solid #fff;
+     border-radius: 32px;
+     padding: 16px 48px;
+     font-size: 1.15rem;
+     font-weight: 700;
+     cursor: pointer;
+     box-shadow: 0 2px 8px rgba(44, 165, 141, 0.08);
+     transition: background 0.2s, color 0.2s;
+     margin-top: 12px;
+     text-align: left;
+}
+
+.hero-content .hero-btn:hover {
+    background: #388e3c;
+    color: #fff;
+}
+/* Card styles from index.php */
+.binhi-card {
+    background: #f9f9f9;
+    border-radius: 16px;
+    width: 400px;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(14, 65, 54, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: box-shadow 0.3s ease;
+}
+.binhi-card-img {
+    transition: transform 0.3s ease;
+}
+.binhi-card-img:hover {
+    transform: scale(1.08);
+}
+.binhi-card-title {
+    color: #fff;
+    font-size: 1.25rem;
+    font-weight: 900;
+    padding: 32px 0;
+    text-align: center;
+    letter-spacing: 2px;
+    width: 100%;
+    transition: background 0.3s ease;
+}
+.seed-subsidy-title {
+    background: #2ca58d !important;
+}
+.seed-request-title {
+    background: #ff9800 !important;
+}
+.smart-storage-title {
+    background: #00bfae !important;
+}
+.binhi-card-title:hover {
+    background: #388e3c !important;
+}
+/* style.css for BINHI homepage header and navigation */
+
+.binhi-header {
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(44, 165, 141, 0.08);
+    width: 100%;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+.binhi-header-row {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 32px;
+    height: 72px;
+}
+.binhi-logo-area {
+    display: flex;
+    align-items: center;
+}
+.binhi-logo-img {
+    height: 40px;
+    width: 40px;
+    margin-right: 10px;
+}
+.binhi-logo-text {
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: #222;
+    letter-spacing: 2px;
+}
+.binhi-logo-green {
+    color: #2ca58d;
+}
+.binhi-logo-leaf {
+    font-size: 1.3rem;
+    color: #2ca58d;
+}
+.binhi-nav-bar {
+    display: flex;
+    gap: 32px;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+}
+.binhi-nav-bar a {
+    color: #222;
+    text-decoration: none;
+    font-size: 1.08rem;
+    font-weight: 600;
+    padding: 8px 0;
+    transition: color 0.2s;
+}
+.binhi-nav-bar a:hover {
+    color: #2ca58d;
+}
+.binhi-auth-btns {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+.binhi-btn-login {
+    background: #fff;
+    color: #2ca58d;
+    border: 2px solid #2ca58d;
+    border-radius: 24px;
+    padding: 8px 24px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+}
+.binhi-btn-login:hover {
+    background: #2ca58d;
+    color: #fff;
+}
+.binhi-btn-signup {
+    background: #2ca58d;
+    color: #fff;
+    border: none;
+    border-radius: 24px;
+    padding: 8px 24px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.binhi-btn-signup:hover {
+    background: #388e3c;
+}
+
+/* Card styles for homepage */
+.binhi-card {
+    background: #f9f9f9;
+    border-radius: 16px;
+    width: 400px;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(14, 65, 54, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: box-shadow 0.3s ease;
+}
+.binhi-card-img {
+    transition: transform 0.3s ease;
+}
+.binhi-card-img:hover {
+    transform: scale(1.08);
+}
+.binhi-card-title {
+    color: #fff;
+    font-size: 1.25rem;
+    font-weight: 900;
+    padding: 32px 0;
+    text-align: center;
+    letter-spacing: 2px;
+    width: 100%;
+    transition: background 0.3s ease;
+}
+.seed-subsidy-title {
+    background: #2ca58d !important;
+}
+.seed-request-title {
+    background: #ff9800 !important;
+}
+.smart-storage-title {
+    background: #00bfae !important;
+}
+.binhi-card-title:hover {
+    background: #388e3c !important;
+}

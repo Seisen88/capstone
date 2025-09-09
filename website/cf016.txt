@@ -1,0 +1,320 @@
+CF013 - SYSTEM PROPOSAL
+Group Name: CPG24 IT MSN - Moderna Singularity Neural
+Group Members  and Roles:
+Project Manager – Ivan Joseph U. Lao, 2020425@usls.edu.ph
+Researcher / Analysts – Bryan B. Altura, s2121881@usls.edu.ph
+Researcher / Analysts – John Cyril T. Geraldo, s1822053@usls.edu.ph
+Programmer – John Ezekil G. Gulmatico, s2120516@usls.edu.ph
+Programmer – Zandrix Jan O. Pongos, s2121672@usls.edu.ph
+Capstone Faculty Adviser: Melon, Gecynth Namo
+Title 1: 
+BINHI: A Web and Mobile Systems for Localized Cooperative Seed Subsidy and Farmer Engagement Support
+
+
+SYSTEMS OVERVIEW
+Based on the findings of the BINHI study, a persistent challenge in seed management among agricultural cooperatives is the lack of active farmer participation in key decisions, particularly in seed allocation processes. Farmers are often left uninformed or have limited channels to communicate feedback and concerns to cooperative officers. This gap leads to a lack of transparency, reduced trust, and seed distribution that may not always align with farmers' actual needs or seasonal requirements. Furthermore, the study highlighted a need for more direct mechanisms for farmers to report problems, check schedules, and receive important alerts, as well as for cooperatives to streamline inventory tracking, delivery scheduling, and member coordination.
+
+To address these critical gaps, this system proposes a comprehensive web and mobile based platform. Key features include a user management module for role based access (farmers and officers), a seed request and allocation module allowing farmers to submit requests and track status, and a cooperative decision board module to facilitate polls and voting for inclusive decision making. A live chat and support module will enable real time communication between farmers and cooperative staff for guidance and issue resolution. Additionally, notifications module will provide automated updates on distribution schedules and meetings, while a feedback module will allow farmers to submit feedback on seed quality and raise concerns.
+
+This system is intended to help by providing a digital space for inclusive participation and structured decision making, ensuring that farmers’ voices are captured and considered in real time. By fostering direct communication and transparency in seed subsidy allocation and cooperative governance, the platform aims to promote greater trust, accountability, and ultimately, enhance the effectiveness and responsiveness of seed management practices within agricultural cooperatives in Negros Occidental.
+
+
+SYSTEMS OBJECTIVES
+The system aims to enhance farmer participation in cooperative decision-making and seed allocation processes by providing transparent and accessible digital platforms. The system has the following specific objectives: 
+To create a website for cooperative officers to manage seed allocation plans, distribute information, and track farmer polls and feedback results
+To create a mobile application for farmers to access cooperative updates, participate in allocation discussions through polls and chat, and easily submit concerns or inputs
+To evaluate the overall usability of BINHI using the System Usability Scale (SUS) questionnaire
+Use Case Diagram
+
+Sample Framework – Web
+
+
+Sample Framework – Mobile
+                    
+
+
+METHODOLOGY
+(Agile Framework):
+The system will be developed using the Agile methodology, which emphasizes iterative development, user collaboration, and rapid deployment. The project will proceed in the following stages:
+
+Planning & Requirement Gathering
+
+Collaborate with cooperative officers and farmers to define user stories for key features (e.g., chat system, decision logs, seed allocation interface).
+
+Prioritize functionalities such as farmer chat feedback, allocation tracking, and decision broadcasting.
+
+Design (UI/UX Prototyping)
+
+Develop wireframes and interactive prototypes for both web and mobile platforms.
+
+Conduct user feedback sessions to refine usability based on actual cooperative workflows.
+
+Incremental Development
+
+Use 2-week sprints to build modular features (e.g., user login, chat functionality, seed request form, cooperative announcements).
+
+Backend integration with cloud services for data storage and syncing (e.g., Firebase).
+
+Testing and Feedback
+
+Conduct user testing with cooperative officers and selected farmers at the end of each sprint.
+
+Adjust backlog and sprint goals based on insights and issues raised.
+
+Gantt Chart:
+
+
+PRACTICAL IMPLICATIONS
+UN SDG 2 (Zero Hunger): Promotes better access to agricultural inputs through transparent subsidy distribution and responsive support systems.
+UN SDG 10 (Reduced Inequalities): Helps bridge the digital and participation gap among smallholder farmers by ensuring equal access to seed resources and cooperative services.
+
+
+
+Title 2: 
+BINHI: A web and mobile applications for seed subsidy tracking and farmer’s feedback mechanisms 
+
+SYSTEMS OVERVIEW
+The BINHI study revealed a significant gap in the current seed subsidy implementation, while farmers receive seeds, there is little to no structured evaluation of whether the distributed seeds led to optimal yields or were appropriate for specific areas. the absence of post distribution feedback loops limits the cooperatives’ and local government units' ability to improve their programs, leading to issues like limited seed selection, insufficient coverage, and a lack of proper regional seasonal alignment. this results in fragmented support systems and hinders data driven adjustments for future allocations, impacting the long term sustainability and effectiveness of the subsidy program.
+
+To address this shortfall, this system proposes to digitize seed subsidy allocation and tracking by integrating yield reporting and farmer feedback into the subsidy process. key features include a user registration and profile module for detailed farm and farmer information, a seed subsidy application module for streamlined requests and status tracking, and a robust yield input and analytics module where farmers can submit harvest data, which the system will compare with seed input for analysis. a feedback and rating module will enable farmers to rate seed quality and timeliness, logging trends for future improvements. for cooperative officers, a report generation module will provide automated reports on allocation efficiency and yield correlation, complemented by a monitoring dashboard for a comprehensive overview of distributions, yield data, and farmer participation insights.
+
+This system is intended to help by enabling data driven adjustments for future allocations and better support for underperforming recipients. by establishing a transparent and responsive ecosystem for seed support programs, it will allow cooperatives and LGUs to fine tune seed distribution strategies based on measurable yield outcomes and direct farmer inputs, ensuring that subsidies are more effective, evidence based, and contribute directly to enhanced agricultural productivity and reduced inequalities.
+
+
+
+
+
+
+
+SYSTEMS OBJECTIVES
+The system aims to digitize the allocation, tracking, and evaluation of seed subsidies by integrating post-harvest yield data and farmer feedback. The system has the following specific objectives:
+To create a website for cooperative managers to analyze incoming yield data, track subsidy disbursements, and make evidence-based improvements in allocation strategies.
+To create a mobile application for farmers to request seeds, record their harvest yields, and rate the quality of the seeds they received. 
+To evaluate the overall usability of BINHI using the System Usability Scale (SUS) questionnaire.
+
+
+Use Case Diagram
+
+
+Sample Framework – Web
+
+
+
+
+Sample Framework – Mobile
+          
+
+
+METHODOLOGY
+(Agile Framework):
+The system will be developed using the Agile methodology, which emphasizes iterative development, user collaboration, and rapid deployment. The project will proceed in the following stages:
+
+Planning & Requirement Gathering
+
+Collaborate with cooperative officers and farmers to define user stories for key features (e.g., chat system, decision logs, seed allocation interface).
+
+Prioritize functionalities such as farmer chat feedback, allocation tracking, and decision broadcasting.
+
+Design (UI/UX Prototyping)
+
+Develop wireframes and interactive prototypes for both web and mobile platforms.
+
+Conduct user feedback sessions to refine usability based on actual cooperative workflows.
+
+Incremental Development
+
+Use 2-week sprints to build modular features (e.g., user login, chat functionality, seed request form, cooperative announcements).
+
+Backend integration with cloud services for data storage and syncing (e.g., Firebase).
+
+Testing and Feedback
+
+Conduct user testing with cooperative officers and selected farmers at the end of each sprint.
+
+Adjust backlog and sprint goals based on insights and issues raised.
+
+
+
+
+PRACTICAL IMPLICATIONS
+UN SDG 2 (Zero Hunger): Enhances agricultural productivity by using real-time data to fine-tune seed distribution strategies.
+UN SDG 10 (Reduced Inequalities): Ensures fair and evidence-based subsidy allocations by basing them on measurable yield outcomes and farmer inputs.
+
+Title 3: 
+BINHI: An IoT and Mobile Approach on Smart Seed Storage System for Quality Controlled Seed Management
+
+SYSTEMS OVERVIEW
+The BINHI study identified a critical challenge in seed management, improper seed storage, particularly with regard to pest control and moisture management, leads to significant quality degradation before seeds even reach the farmers. Cooperatives often lack adequate infrastructure and real time monitoring systems to ensure seeds are stored under ideal conditions, resulting in poor germination rates, reduced seed viability, and substantial pre distribution losses. This issue is exacerbated by environmental exposure to moisture, pests, or extreme temperatures, and a lack of proper seed packaging or containers.
+
+To directly address these problems, this proposal introduces BINHI - An IoT and Mobile Approach on Smart Seed Storage System for Quality Controlled Seed Management. The core of the system is an IoT system equipped with a sensor monitoring module that tracks humidity, temperature, and air flow in real time. This data feeds into a seed quality alert system that sends immediate notifications via a mobile dashboard module to cooperative staff when storage conditions deviate from safe thresholds. The system also incorporates an automated ventilation control module to trigger cooling or fan systems when thresholds are breached, and a maintenance log and reporting module to track pest treatments and maintenance schedules. A user access module manages registration and role based access to specific storage units.
+
+This system is intended to help by deploying an IoT powered smart container system that actively maintains ideal storage environments and provides a mobile interface for continuous monitoring. By mitigating pre distribution losses and ensuring that distributed seeds remain viable and effective for planting, this innovative solution will significantly enhance seed quality, extend seed longevity, and contribute to more resilient and productive agricultural practices within cooperatives in Negros Occidental.
+
+SYSTEMS OBJECTIVES
+The system aims to maintain the quality and viability of seeds by providing a smart storage solution that monitors and controls environmental conditions. The system aims to specifically address the following objectives:
+To create an IoT System that tracks humidity, temperature, and airflow in real-time within the storage containers. 
+To create a mobile application that gives cooperative staff and other authorized users access to live storage condition data, system alerts, and maintenance logs.
+To evaluate the overall usability of BINHI using the System Usability Scale (SUS) questionnaire.
+Use Case Diagram
+          
+
+
+
+
+
+
+
+Sample Framework – Mobile
+                  
+
+METHODOLOGY
+Agile Framework
+
+Sprint Planning:
+Define backlog tasks based on feature modules such as IoT integration, app development, and hardware design.
+
+Prioritize MVP features: temperature/humidity sensors, alerts, container design, and user dashboard.
+
+Sprint 1 – Requirement Gathering & Initial Design:
+
+Conduct user interviews with cooperative staff and farmers.
+
+Specify hardware requirements and ideal storage parameters for major crops.
+
+Design low-fidelity wireframes of the mobile interface.
+
+
+Sprint 2 – Hardware Prototype Development:
+
+Integrate temperature and humidity sensors with a microcontroller.
+
+Develop embedded software for continuous environmental monitoring.
+
+Build a pest resistant storage prototype.
+
+Sprint 3 – Mobile App Core Development:
+
+Create a mobile app to display sensor data and alert history.
+
+Build modules for user registration, real-time data view, and manual log entries.
+
+Connect backend database for storing sensor logs and alerts.
+
+Sprint 4 – Integration & User Testing:
+
+Test mobile IoT integration.
+
+Conduct trials.
+
+Collect feedback on usability and performance.
+
+Sprint 5 – Optimization & Release:
+
+Improve sensor calibration and container insulation.
+
+Finalize UI/UX enhancements based on user feedback.
+
+Deploy system and provide training materials for cooperatives.
+
+PRACTICAL IMPLICATIONS
+UN SDG 2 – Zero Hunger: Maintains the quality and availability of seeds for planting, directly contributing to sustainable food production and food security.
+UN SDG 9 – Industry, Innovation, and Infrastructure: Introduces advanced technology and resilient infrastructure into cooperative farming systems, improving storage efficiency and agricultural innovation.
+
+
+Recommendations
+Proposed Title
+SDG
+Methodology(SDLC Model)
+Web/Mobile/IOT
+Modules
+Detailed Functions
+Integrate web and mobile platform is designed to empower farmers in agricultural cooperatives by improving participation, transparency, and access to support. It will combine a seed request and tracking system, an allocation monitoring module, and a real-time chat support feature for communicating with cooperative staff or technical officers.
+BINHI - Enhancing Localized Cooperative Seed Subsidy and Farmer Engagement Platform via Web and Mobile
+UN SDG 2 (Zero Hunger)
+
+UN SDG 10 (Reduced Inequalities)
+Agile Sprint
+Web And Mobile
+User Management Module
+
+Seed Request & Allocation Module
+
+Cooperative Decision Board Module
+
+Live Chat & Support Module
+
+Notifications Module
+
+Feedback & Grievance Module
+Register/Login (Farmers & Officers), Role based access control
+
+Farmers can request seeds, view allocation status, history of requests
+
+Polls, voting mechanisms, feedback forms for decision making participation
+
+Real time chat with cooperative officers for guidance/support
+
+Automated updates on seed distribution schedules, program meetings
+
+Submit feedback on seed quality, raise concerns or disputes
+Digitize the allocation, tracking, and evaluation of seed subsidies provided by cooperatives. It integrates a data collection system for post harvest yields and a feedback module where farmers can report on seed quality and planting outcomes.
+BINHI - Digitizing Seed Subsidy Tracking Through Yield Data and Farmer Feedback Mechanisms Thru Analytics via Web and Mobile
+UN SDG 2 (Zero Hunger)
+
+UN SDG 10 (Reduced Inequalities)
+Agile Sprint
+Web And Mobile
+User Registration & Profile Module
+
+Seed Subsidy Application Module
+
+Yield Input & Analytics Module
+
+Feedback & Rating Module
+
+Report Generation Module
+
+Monitoring Dashboard for Officers
+
+Farmer/co-op registration, farm profile setup (location, crops, past yields)
+
+Apply for subsidies, track approval, get status updates
+
+Farmers submit harvest data; system compares with seed input for analysis
+
+Rate received seeds (quality, timeliness); system logs feedback trends
+
+Automated reports on allocation efficiency, yield correlation
+
+Overview of distributions, yield data, and farmer participation insights
+A smart seed storage solution equipped with IoT sensors to monitor environmental conditions such as humidity and temperature inside storage containers. The system integrates a mobile platform to give real time access to storage data and notifications. It also incorporates physical design solutions to mitigate pest infiltration, ensuring higher quality and viability of seeds during storage
+BINHI - An IoT and Mobile Approach on Smart Seed Storage System for Quality Controlled Seed Management
+UN SDG 2 – Zero Hunger
+
+UN SDG 9 – Industry, Innovation, and Infrastructure
+Agile Sprint
+IOT And Mobile
+Sensor Monitoring Module (IoT)
+
+Seed Quality Alert System
+
+Mobile Dashboard Module
+
+Automated Ventilation Control Module
+
+User Access Module
+
+Maintenance Log & Reporting Module
+Real-time data logging of temperature and humidity via sensors
+
+Sends alerts via app if storage conditions go beyond safe thresholds
+
+Users (farmers/coops) view storage status, sensor history, and alerts
+
+Triggers cooling/fan system when thresholds are breached (hardware integration)
+
+Register/login, assign access to specific storage units per user
+
+Track pest treatments, maintenance schedules, and repair logs
+
+
