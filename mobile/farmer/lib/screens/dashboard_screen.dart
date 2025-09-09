@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'track_screen.dart';
 import 'request_screen.dart';
 import 'settings_screen.dart';
@@ -51,7 +52,140 @@ class _DashboardScreenState extends State<DashboardScreen> {
           },
         );
       });
+    } else {
+      // Show information modal after verification
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        showInformationModal(context);
+      });
     }
+  }
+
+  void showInformationModal(BuildContext context) {
+    final _formKey = GlobalKey<FormState>();
+    String landSize = '';
+    String address = '';
+    String coopGroup = '';
+    bool isLoading = false;
+
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) {
+        return StatefulBuilder(
+          builder: (context, setState) {
+            return AlertDialog(
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
+              title: Row(
+                children: [
+                  Icon(Icons.info_outline, color: Color(0xFF2ca58d)),
+                  SizedBox(width: 8),
+                  Text('Complete Your Information'),
+                ],
+              ),
+              content: ConstrainedBox(
+                constraints: BoxConstraints(
+                  maxWidth: 350, // Responsive max width for mobile
+                ),
+                child: Form(
+                  key: _formKey,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        TextFormField(
+                          decoration: InputDecoration(
+                            labelText: 'Land Size (hectares)',
+                            prefixIcon: Icon(Icons.landscape),
+                            border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                          ),
+                          keyboardType: TextInputType.number,
+                          onSaved: (val) => landSize = val ?? '',
+                          validator: (val) => val == null || val.isEmpty ? 'Required' : null,
+                        ),
+                        SizedBox(height: 16),
+                        TextFormField(
+                          decoration: InputDecoration(
+                            labelText: 'Address',
+                            prefixIcon: Icon(Icons.home),
+                            border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                          ),
+                          onSaved: (val) => address = val ?? '',
+                          validator: (val) => val == null || val.isEmpty ? 'Required' : null,
+                        ),
+                        SizedBox(height: 16),
+                        TextFormField(
+                          decoration: InputDecoration(
+                            labelText: 'Coop Group',
+                            prefixIcon: Icon(Icons.group),
+                            border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                          ),
+                          onSaved: (val) => coopGroup = val ?? '',
+                          validator: (val) => val == null || val.isEmpty ? 'Required' : null,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              actions: [
+                isLoading
+                  ? Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8.0),
+                      child: CircularProgressIndicator(),
+                    )
+                  : ElevatedButton.icon(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Color(0xFF2ca58d),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                        padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                      ),
+                      icon: Icon(Icons.send),
+                      label: Text('Submit', style: TextStyle(fontWeight: FontWeight.bold)),
+                      onPressed: () async {
+                        if (_formKey.currentState?.validate() ?? false) {
+                          _formKey.currentState?.save();
+                          setState(() => isLoading = true);
+                          int farmerId = 1; // Replace with actual farmer ID
+                          await http.post(
+                            Uri.parse('http://10.0.2.2/capstone/api/add_farmer_info.php'), // Change to your actual server URL
+                            body: {
+                              'farmer_id': farmerId.toString(),
+                              'land_size': landSize,
+                              'address': address,
+                              'coop_group': coopGroup,
+                            },
+                          );
+                          setState(() => isLoading = false);
+                          Navigator.of(context).pop();
+                          showDialog(
+                            context: context,
+                            builder: (context) => AlertDialog(
+                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
+                              title: Row(
+                                children: [
+                                  Icon(Icons.check_circle, color: Color(0xFF22c55e)),
+                                  SizedBox(width: 8),
+                                  Text('Success'),
+                                ],
+                              ),
+                              content: Text('Your information has been submitted!'),
+                              actions: [
+                                TextButton(
+                                  onPressed: () => Navigator.of(context).pop(),
+                                  child: Text('OK'),
+                                ),
+                              ],
+                            ),
+                          );
+                        }
+                      },
+                    ),
+              ],
+            );
+          },
+        );
+      },
+    );
   }
 
   Widget _summaryItem(

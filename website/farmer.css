@@ -41,6 +41,52 @@ body {
 .main-menu a:hover {
     background: #2fb19b;
 }
+.sidebar-collapsible {
+    width: 100%;
+}
+.sidebar-collapsible > a {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 18px;
+    padding: 12px 24px;
+    color: #fff;
+    text-decoration: none;
+    cursor: pointer;
+    background: #2fb19b;
+    border-radius: 8px;
+}
+.collapse-arrow {
+    margin-left: 8px;
+    font-size: 16px;
+    transition: transform 0.2s;
+}
+.sidebar-submenu {
+    display: none;
+    flex-direction: column;
+    background: #21897e;
+    border-radius: 8px;
+    margin: 0 16px 8px 16px;
+    box-shadow: 0 2px 8px rgba(44,165,141,0.08);
+    padding: 4px 0;
+}
+.sidebar-submenu a.subtab {
+    color: #fff;
+    padding: 8px 20px;
+    font-size: 13px !important;
+    text-decoration: none;
+    border-radius: 6px;
+    margin: 2px 0;
+    transition: background 0.2s;
+    cursor: pointer;
+}
+.sidebar-submenu a.subtab.active,
+.sidebar-submenu a.subtab:hover {
+    background: #4ad991;
+    color: #232946;
+}
+.tab-content { display: none; }
+.tab-content.active { display: block; }
 .main-menu .icon {
     width: 28px;
     height: 28px;
@@ -319,4 +365,110 @@ body {
     display: inline-block;
     direction: ltr;
     -webkit-font-smoothing: antialiased;
+}
+
+.farmer-status.verified { color: green; font-weight: bold; }
+.farmer-status.pending { color: orange; font-weight: bold; }
+.sort-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0 4px;
+  vertical-align: middle;
+}
+.sort-btn svg {
+  width: 16px;
+  height: 16px;
+  fill: #888;
+  transition: transform 0.2s;
+}
+.sort-btn.active svg {
+  fill: #2ca58d;
+}
+.sort-btn.up svg {
+  transform: rotate(0deg);
+}
+.sort-btn.down svg {
+  transform: rotate(180deg);
+}
+
+/* Enhanced Add Farmer Modal Styles */
+#addFarmerModal {
+  display: none;
+  position: fixed;
+  top: 0; left: 0; width: 100vw; height: 100vh;
+  background: rgba(0,0,0,0.3);
+  z-index: 9999;
+  align-items: center;
+  justify-content: center;
+}
+#addFarmerModal.active {
+  display: flex;
+}
+.add-farmer-card {
+  background: #fff;
+  padding: 32px 36px;
+  border-radius: 18px;
+  max-width: 420px;
+  margin: auto;
+  box-shadow: 0 8px 32px rgba(44,165,141,0.18);
+  position: relative;
+}
+.add-farmer-card h2 {
+  margin-top: 0;
+  color: #2ca58d;
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+.add-farmer-card label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 500;
+  color: #222B45;
+}
+.add-farmer-card input {
+  width: 100%;
+  padding: 10px 12px;
+  margin-bottom: 18px;
+  border: 1px solid #e0e7ef;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.2s;
+}
+.add-farmer-card input:focus {
+  border-color: #2ca58d;
+  outline: none;
+}
+.add-farmer-card .modal-actions {
+  text-align: right;
+}
+.add-farmer-card button[type="submit"] {
+  background: #2ca58d;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 22px;
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-left: 8px;
+  box-shadow: 0 2px 8px rgba(44,165,141,0.08);
+  transition: background 0.2s;
+}
+.add-farmer-card button[type="submit"]:hover {
+  background: #24977e;
+}
+.add-farmer-card button[type="button"] {
+  background: #e0e7ef;
+  color: #222B45;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 18px;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-right: 8px;
+  transition: background 0.2s;
+}
+.add-farmer-card button[type="button"]:hover {
+  background: #cfd8dc;
 }
