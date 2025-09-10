@@ -25,6 +25,16 @@ class DashboardScreen extends StatefulWidget {
 class _DashboardScreenState extends State<DashboardScreen> {
   int? farmerId;
 
+  Future<bool> checkFarmerInfo(int farmerId) async {
+    final response = await http.get(
+      Uri.parse(
+        'http://10.0.2.2/capstone/api/check_farmer_info.php?farmer_id=$farmerId',
+      ),
+    );
+    final data = jsonDecode(response.body);
+    return data['exists'] == true;
+  }
+
   @override
   void initState() {
     super.initState();
@@ -71,8 +81,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
           setState(() {
             farmerId = user['id'];
           });
+          // Check if farmer info exists
+          final infoExists = await checkFarmerInfo(user['id']);
+          if (!infoExists && mounted) {
+            _showInformationModal();
+          }
         }
-        _showInformationModal();
       });
     }
   }
