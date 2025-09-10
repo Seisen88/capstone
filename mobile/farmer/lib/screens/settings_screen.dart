@@ -5,7 +5,13 @@ import 'track_screen.dart';
 import 'request_screen.dart';
 
 class SettingsScreen extends StatelessWidget {
-  const SettingsScreen({super.key});
+  final String username;
+  final bool isVerified;
+  const SettingsScreen({
+    super.key,
+    required this.username,
+    required this.isVerified,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +39,7 @@ class SettingsScreen extends StatelessWidget {
               Icons.person_outline,
               'Profile Settings',
               'Personal information and farmer details',
-              ProfileSettingsScreen(),
+              ProfileSettingsScreen(username: username, isVerified: isVerified),
             ),
             SizedBox(height: 16),
             _settingsCard(
@@ -114,27 +120,42 @@ class SettingsScreen extends StatelessWidget {
         if (index == 0) {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (_) => DashboardScreen()),
+            MaterialPageRoute(
+              builder: (context) =>
+                  DashboardScreen(username: username, isVerified: isVerified),
+            ),
           );
         } else if (index == 1) {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (_) => TrackScreen()),
+            MaterialPageRoute(
+              builder: (context) =>
+                  TrackScreen(username: username, isVerified: isVerified),
+            ),
           );
         } else if (index == 2) {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (_) => RequestScreen()),
+            MaterialPageRoute(
+              builder: (context) =>
+                  RequestScreen(username: username, isVerified: isVerified),
+            ),
           );
         } else if (index == 3) {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (_) => SettingsScreen()),
+            MaterialPageRoute(
+              builder: (context) =>
+                  SettingsScreen(username: username, isVerified: isVerified),
+            ),
           );
         } else if (index == 4) {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (_) => SupportScreen()),
+            MaterialPageRoute(
+              builder: (context) =>
+                  SupportScreen(username: username, isVerified: isVerified),
+            ),
           );
         }
       },
@@ -159,7 +180,13 @@ class SettingsScreen extends StatelessWidget {
 
 // Profile Settings Page
 class ProfileSettingsScreen extends StatelessWidget {
-  const ProfileSettingsScreen({super.key});
+  final String username;
+  final bool isVerified;
+  const ProfileSettingsScreen({
+    super.key,
+    required this.username,
+    required this.isVerified,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -176,6 +203,7 @@ class ProfileSettingsScreen extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16),
           ),
+          elevation: 0,
           child: Padding(
             padding: const EdgeInsets.all(18.0),
             child: Column(

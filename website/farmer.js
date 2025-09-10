@@ -3,7 +3,14 @@ function toggleFarmerMenu(e) {
   var submenu = document.getElementById('farmer-submenu');
   submenu.style.display = (submenu.style.display === 'block') ? 'none' : 'block';
   var arrow = document.querySelector('.collapse-arrow');
-  arrow.innerHTML = submenu.style.display === 'block' ? '&#9652;' : '&#9662;';
+  // Arrow faces down (▼) when expanded, right (▶) when collapsed
+  arrow.innerHTML = submenu.style.display === 'block' ? '&#9660;' : '&#9654;';
+  // Remove any centering style from active tab
+  var activeFarmerTab = document.querySelector('.sidebar-collapsible > a.active');
+  if (activeFarmerTab) {
+    activeFarmerTab.style.textAlign = 'left';
+    activeFarmerTab.style.justifyContent = 'flex-start';
+  }
 }
 
 function showTab(tab) {
@@ -16,6 +23,8 @@ function showTab(tab) {
 document.addEventListener('DOMContentLoaded', function() {
   var submenu = document.getElementById('farmer-submenu');
   submenu.style.display = 'block'; // default expanded
+  var arrow = document.querySelector('.collapse-arrow');
+  arrow.innerHTML = '&#9660;'; // ▼ down arrow by default
 });
 function verifyFarmer(id, btn) {
     btn.disabled = true;

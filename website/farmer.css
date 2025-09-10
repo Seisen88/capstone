@@ -40,6 +40,8 @@ body {
 .main-menu a.active,
 .main-menu a:hover {
     background: #2fb19b;
+    text-align: left !important;
+    justify-content: flex-start !important;
 }
 .sidebar-collapsible {
     width: 100%;
@@ -47,7 +49,8 @@ body {
 .sidebar-collapsible > a {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-start;
+    gap: 12px;
     font-size: 18px;
     padding: 12px 24px;
     color: #fff;
@@ -56,6 +59,26 @@ body {
     background: #2fb19b;
     border-radius: 8px;
 }
+
+/* Ensure Farmer text is left-aligned and arrow is on the right */
+.sidebar-collapsible > a .farmer-label {
+    flex: 0 1 auto;
+    text-align: left;
+    margin-left: 8px;
+}
+.sidebar-collapsible > a .collapse-arrow {
+    margin-left: 18px;
+    font-size: 8px;
+    line-height: 1;
+}
+
+.sidebar-collapsible > a.active {
+    text-align: left !important;
+    justify-content: flex-start !important;
+    align-items: center !important;
+    display: flex !important;
+}
+
 .collapse-arrow {
     margin-left: 8px;
     font-size: 16px;
@@ -369,28 +392,6 @@ body {
 
 .farmer-status.verified { color: green; font-weight: bold; }
 .farmer-status.pending { color: orange; font-weight: bold; }
-.sort-btn {
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 0 4px;
-  vertical-align: middle;
-}
-.sort-btn svg {
-  width: 16px;
-  height: 16px;
-  fill: #888;
-  transition: transform 0.2s;
-}
-.sort-btn.active svg {
-  fill: #2ca58d;
-}
-.sort-btn.up svg {
-  transform: rotate(0deg);
-}
-.sort-btn.down svg {
-  transform: rotate(180deg);
-}
 
 /* Enhanced Add Farmer Modal Styles */
 #addFarmerModal {
@@ -471,4 +472,9 @@ body {
 }
 .add-farmer-card button[type="button"]:hover {
   background: #cfd8dc;
+}
+.main-menu a,
+.sidebar-collapsible > a {
+    text-align: left !important;
+    justify-content: flex-start !important;
 }

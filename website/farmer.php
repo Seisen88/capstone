@@ -77,7 +77,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_id'])) {
       <div class="sidebar-collapsible">
         <a href="#" class="active" onclick="toggleFarmerMenu(event)">
           <span class="icon"><img src="../images/verification.png" alt="Farmer" style="width:25px; vertical-align:right; margin-right:8px;"></span>
-          Farmer <span class="collapse-arrow">&#9662;</span>
+          <span class="farmer-label">Farmer</span>
+          <span class="collapse-arrow">&#9662;</span>
         </a>
         <div class="sidebar-submenu" id="farmer-submenu">
           <a href="#" class="subtab active" onclick="showTab('verification')">Verification Log</a>
@@ -164,7 +165,49 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_id'])) {
       <div class="farmer-list-header">
         <div class="farmer-list-title">Farmer Information</div>
       </div>
-      <div style="padding:32px; color:#888;">Information content goes here.</div>
+      <div class="farmer-list-search-row">
+        <input type="text" class="farmer-search" placeholder="Search farmers..." oninput="searchFarmersInfo(this.value)">
+        <button class="farmer-search-btn">Search</button>
+      </div>
+      <table class="farmer-table" id="farmer-info-table">
+        <thead>
+          <tr>
+            <th>Farmer ID</th>
+            <th>Name</th>
+            <th>Land Size (ha)</th>
+            <th>Province</th>
+            <th>City/Municipality</th>
+            <th>Barangay</th>
+            <th>Street/Area</th>
+            <th>Other Info</th>
+            <th>Image</th>
+          </tr>
+        </thead>
+        <tbody id="farmer-info-table-body">
+        <?php
+        // Fetch farmer info from the information table, join with farmer for names
+        $info_result = $conn->query("SELECT i.id, i.farmer_id, f.first_name, f.last_name, i.land_size, i.province, i.city, i.barangay, i.street, i.other_info, i.image FROM information i JOIN farmer f ON i.farmer_id = f.id");
+
+        while ($row = $info_result->fetch_assoc()) {
+          echo "<tr>";
+          echo "<td>F{$row['farmer_id']}</td>";
+          echo "<td>{$row['first_name']} {$row['last_name']}</td>";
+          echo isset($row['land_size']) ? "<td>{$row['land_size']}</td>" : "<td>-</td>";
+          echo isset($row['province']) ? "<td>{$row['province']}</td>" : "<td>-</td>";
+          echo isset($row['city']) ? "<td>{$row['city']}</td>" : "<td>-</td>";
+          echo isset($row['barangay']) ? "<td>{$row['barangay']}</td>" : "<td>-</td>";
+          echo isset($row['street']) ? "<td>{$row['street']}</td>" : "<td>-</td>";
+          echo isset($row['other_info']) ? "<td>{$row['other_info']}</td>" : "<td>-</td>";
+          if (isset($row['image']) && $row['image']) {
+            echo "<td><img src='../images/{$row['image']}' alt='Farmer Image' style='width:48px;height:48px;border-radius:8px;object-fit:cover;'></td>";
+          } else {
+            echo "<td>-</td>";
+          }
+          echo "</tr>";
+        }
+        ?>
+        </tbody>
+      </table>
     </div>
     </div>
     <!-- Add Farmer Modal -->

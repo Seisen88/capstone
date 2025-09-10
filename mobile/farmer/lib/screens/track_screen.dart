@@ -2,9 +2,17 @@ import 'package:flutter/material.dart';
 import 'dashboard_screen.dart';
 import 'request_screen.dart';
 import 'settings_screen.dart';
+import 'support_screen.dart';
 
 class TrackScreen extends StatefulWidget {
-  const TrackScreen({super.key});
+  final String username;
+  final bool isVerified;
+
+  const TrackScreen({
+    super.key,
+    required this.username,
+    required this.isVerified,
+  });
 
   @override
   _TrackScreenState createState() => _TrackScreenState();
@@ -102,7 +110,10 @@ class _TrackScreenState extends State<TrackScreen> {
           icon: Icon(Icons.arrow_back),
           onPressed: () => Navigator.pop(context),
         ),
-        title: Text('Track Allocations', style: TextStyle(fontWeight: FontWeight.bold)),
+        title: Text(
+          'Track Allocations',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
         actions: [
           IconButton(icon: Icon(Icons.notifications_none), onPressed: () {}),
           IconButton(icon: Icon(Icons.person_outline), onPressed: () {}),
@@ -116,18 +127,29 @@ class _TrackScreenState extends State<TrackScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Track Allocations', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
+                Text(
+                  'Track Allocations',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                ),
                 Row(
                   children: [
-                    Text('3 requests', style: TextStyle(color: Colors.grey[700], fontSize: 14)),
+                    Text(
+                      '3 requests',
+                      style: TextStyle(color: Colors.grey[700], fontSize: 14),
+                    ),
                     SizedBox(width: 12),
                     ElevatedButton.icon(
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Color(0xFFF4F4F4),
                         foregroundColor: Colors.black87,
                         elevation: 0,
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                        padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 12,
+                          vertical: 8,
+                        ),
                       ),
                       icon: Icon(Icons.filter_alt_outlined, size: 18),
                       label: Text('Filters'),
@@ -175,63 +197,136 @@ class _TrackScreenState extends State<TrackScreen> {
                         decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(16),
-                          boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 8)],
+                          boxShadow: [
+                            BoxShadow(color: Colors.black12, blurRadius: 8),
+                          ],
                         ),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Row(
                               children: [
-                                Text(req['id'], style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
+                                Text(
+                                  req['id'],
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 14,
+                                  ),
+                                ),
                                 SizedBox(width: 8),
                                 Container(
-                                  padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                                  padding: EdgeInsets.symmetric(
+                                    horizontal: 8,
+                                    vertical: 2,
+                                  ),
                                   decoration: BoxDecoration(
                                     color: req['priorityColor'],
                                     borderRadius: BorderRadius.circular(12),
                                   ),
-                                  child: Text(req['priority'], style: TextStyle(color: Colors.black87, fontWeight: FontWeight.w600, fontSize: 12)),
+                                  child: Text(
+                                    req['priority'],
+                                    style: TextStyle(
+                                      color: Colors.black87,
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 12,
+                                    ),
+                                  ),
                                 ),
                                 SizedBox(width: 6),
                                 Container(
-                                  padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                                  padding: EdgeInsets.symmetric(
+                                    horizontal: 8,
+                                    vertical: 2,
+                                  ),
                                   decoration: BoxDecoration(
                                     color: req['statusColor'],
                                     borderRadius: BorderRadius.circular(12),
                                   ),
-                                  child: Text(req['status'], style: TextStyle(color: Colors.black87, fontWeight: FontWeight.w600, fontSize: 12)),
+                                  child: Text(
+                                    req['status'],
+                                    style: TextStyle(
+                                      color: Colors.black87,
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 12,
+                                    ),
+                                  ),
                                 ),
                               ],
                             ),
                             SizedBox(height: 6),
-                            Text(req['name'], style: TextStyle(fontWeight: FontWeight.w500, fontSize: 13)),
+                            Text(
+                              req['name'],
+                              style: TextStyle(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 13,
+                              ),
+                            ),
                             SizedBox(height: 10),
                             Row(
                               children: [
                                 Expanded(
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
-                                      Text('Seed:', style: TextStyle(color: Colors.grey[600], fontSize: 12)),
-                                      Text(req['seed'], style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
+                                      Text(
+                                        'Seed:',
+                                        style: TextStyle(
+                                          color: Colors.grey[600],
+                                          fontSize: 12,
+                                        ),
+                                      ),
+                                      Text(
+                                        req['seed'],
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 13,
+                                        ),
+                                      ),
                                     ],
                                   ),
                                 ),
                                 Expanded(
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
-                                      Text('Quantity:', style: TextStyle(color: Colors.grey[600], fontSize: 12)),
-                                      Text(req['quantity'], style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
+                                      Text(
+                                        'Quantity:',
+                                        style: TextStyle(
+                                          color: Colors.grey[600],
+                                          fontSize: 12,
+                                        ),
+                                      ),
+                                      Text(
+                                        req['quantity'],
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 13,
+                                        ),
+                                      ),
                                     ],
                                   ),
                                 ),
                                 Expanded(
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
-                                      Text('Requested:', style: TextStyle(color: Colors.grey[600], fontSize: 12)),
-                                      Text(req['date'], style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
+                                      Text(
+                                        'Requested:',
+                                        style: TextStyle(
+                                          color: Colors.grey[600],
+                                          fontSize: 12,
+                                        ),
+                                      ),
+                                      Text(
+                                        req['date'],
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 13,
+                                        ),
+                                      ),
                                     ],
                                   ),
                                 ),
@@ -240,9 +335,21 @@ class _TrackScreenState extends State<TrackScreen> {
                             SizedBox(height: 10),
                             Row(
                               children: [
-                                Icon(Icons.location_on_outlined, color: Color(0xFF2563eb), size: 18),
+                                Icon(
+                                  Icons.location_on_outlined,
+                                  color: Color(0xFF2563eb),
+                                  size: 18,
+                                ),
                                 SizedBox(width: 4),
-                                Expanded(child: Text(req['location'], style: TextStyle(fontSize: 12, color: Colors.grey[700]))),
+                                Expanded(
+                                  child: Text(
+                                    req['location'],
+                                    style: TextStyle(
+                                      fontSize: 12,
+                                      color: Colors.grey[700],
+                                    ),
+                                  ),
+                                ),
                               ],
                             ),
                             SizedBox(height: 10),
@@ -262,8 +369,21 @@ class _TrackScreenState extends State<TrackScreen> {
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Text(isExpanded ? 'Hide Timeline' : 'View Timeline', style: TextStyle(fontWeight: FontWeight.bold, color: Color(0xFF2563eb))),
-                                    Icon(isExpanded ? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down, color: Color(0xFF2563eb)),
+                                    Text(
+                                      isExpanded
+                                          ? 'Hide Timeline'
+                                          : 'View Timeline',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Color(0xFF2563eb),
+                                      ),
+                                    ),
+                                    Icon(
+                                      isExpanded
+                                          ? Icons.keyboard_arrow_up
+                                          : Icons.keyboard_arrow_down,
+                                      color: Color(0xFF2563eb),
+                                    ),
                                   ],
                                 ),
                               ),
@@ -280,34 +400,74 @@ class _TrackScreenState extends State<TrackScreen> {
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text('Progress Timeline', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
+                                    Text(
+                                      'Progress Timeline',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 15,
+                                      ),
+                                    ),
                                     SizedBox(height: 12),
-                                    ...req['timeline'].map<Widget>((step) => Padding(
-                                      padding: const EdgeInsets.only(bottom: 12.0),
-                                      child: Row(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          CircleAvatar(
-                                            backgroundColor: step['color'].withOpacity(0.15),
-                                            radius: 16,
-                                            child: Icon(step['icon'], color: step['color'], size: 18),
-                                          ),
-                                          SizedBox(width: 10),
-                                          Expanded(
-                                            child: Column(
-                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                    ...req['timeline']
+                                        .map<Widget>(
+                                          (step) => Padding(
+                                            padding: const EdgeInsets.only(
+                                              bottom: 12.0,
+                                            ),
+                                            child: Row(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
                                               children: [
-                                                Text(step['title'], style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13)),
-                                                SizedBox(height: 2),
-                                                Text(step['desc'], style: TextStyle(fontSize: 12, color: Colors.black54)),
-                                                SizedBox(height: 2),
-                                                Text(step['date'], style: TextStyle(fontSize: 11, color: Colors.grey[600])),
+                                                CircleAvatar(
+                                                  backgroundColor: step['color']
+                                                      .withOpacity(0.15),
+                                                  radius: 16,
+                                                  child: Icon(
+                                                    step['icon'],
+                                                    color: step['color'],
+                                                    size: 18,
+                                                  ),
+                                                ),
+                                                SizedBox(width: 10),
+                                                Expanded(
+                                                  child: Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Text(
+                                                        step['title'],
+                                                        style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.w600,
+                                                          fontSize: 13,
+                                                        ),
+                                                      ),
+                                                      SizedBox(height: 2),
+                                                      Text(
+                                                        step['desc'],
+                                                        style: TextStyle(
+                                                          fontSize: 12,
+                                                          color: Colors.black54,
+                                                        ),
+                                                      ),
+                                                      SizedBox(height: 2),
+                                                      Text(
+                                                        step['date'],
+                                                        style: TextStyle(
+                                                          fontSize: 11,
+                                                          color:
+                                                              Colors.grey[600],
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
                                               ],
                                             ),
                                           ),
-                                        ],
-                                      ),
-                                    )).toList(),
+                                        )
+                                        .toList(),
                                   ],
                                 ),
                               ),
@@ -356,22 +516,52 @@ class _TrackScreenState extends State<TrackScreen> {
         if (index == 0) {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => DashboardScreen()),
+            MaterialPageRoute(
+              builder: (context) => DashboardScreen(
+                username: widget.username,
+                isVerified: widget.isVerified,
+              ),
+            ),
           );
         } else if (index == 1) {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => TrackScreen()),
+            MaterialPageRoute(
+              builder: (context) => TrackScreen(
+                username: widget.username,
+                isVerified: widget.isVerified,
+              ),
+            ),
           );
         } else if (index == 2) {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => RequestScreen()),
+            MaterialPageRoute(
+              builder: (context) => RequestScreen(
+                username: widget.username,
+                isVerified: widget.isVerified,
+              ),
+            ),
           );
         } else if (index == 3) {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => SettingsScreen()),
+            MaterialPageRoute(
+              builder: (context) => SettingsScreen(
+                username: widget.username,
+                isVerified: widget.isVerified,
+              ),
+            ),
+          );
+        } else if (index == 4) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => SupportScreen(
+                username: widget.username,
+                isVerified: widget.isVerified,
+              ),
+            ),
           );
         }
       },

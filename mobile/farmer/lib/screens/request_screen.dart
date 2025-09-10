@@ -5,7 +5,13 @@ import 'dashboard_screen.dart';
 import 'track_screen.dart';
 
 class RequestScreen extends StatefulWidget {
-  const RequestScreen({super.key});
+  final String username;
+  final bool isVerified;
+  const RequestScreen({
+    super.key,
+    required this.username,
+    required this.isVerified,
+  });
 
   @override
   _RequestScreenState createState() => _RequestScreenState();
@@ -224,27 +230,52 @@ class _RequestScreenState extends State<RequestScreen> {
         if (index == 0) {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => DashboardScreen()),
+            MaterialPageRoute(
+              builder: (context) => DashboardScreen(
+                username: widget.username,
+                isVerified: widget.isVerified,
+              ),
+            ),
           );
         } else if (index == 1) {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => TrackScreen()),
+            MaterialPageRoute(
+              builder: (context) => TrackScreen(
+                username: widget.username,
+                isVerified: widget.isVerified,
+              ),
+            ),
           );
         } else if (index == 2) {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => RequestScreen()),
+            MaterialPageRoute(
+              builder: (context) => RequestScreen(
+                username: widget.username,
+                isVerified: widget.isVerified,
+              ),
+            ),
           );
         } else if (index == 3) {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => SettingsScreen()),
+            MaterialPageRoute(
+              builder: (context) => SettingsScreen(
+                username: widget.username,
+                isVerified: widget.isVerified,
+              ),
+            ),
           );
         } else if (index == 4) {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => SupportScreen()),
+            MaterialPageRoute(
+              builder: (context) => SupportScreen(
+                username: widget.username,
+                isVerified: widget.isVerified,
+              ),
+            ),
           );
         }
       },

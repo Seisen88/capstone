@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'screens/dashboard_screen.dart';
 import 'screens/login_screen.dart';
 import 'screens/signup_screen.dart';
 
@@ -18,7 +17,7 @@ class FarmerCoopApp extends StatelessWidget {
       routes: {
         '/login': (context) => LoginScreen(),
         '/signup': (context) => SignupScreen(),
-        '/dashboard': (context) => DashboardScreen(),
+        // Remove direct route to DashboardScreen, since it requires parameters
       },
     );
   }

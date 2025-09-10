@@ -3,6 +3,7 @@ import 'package:flutter/gestures.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/services.dart';
 import 'dart:convert';
+import 'dart:ui';
 // ...existing code...
 
 class SignupScreen extends StatefulWidget {
@@ -13,6 +14,92 @@ class SignupScreen extends StatefulWidget {
 }
 
 class _SignupScreenState extends State<SignupScreen> {
+  Future<bool> sendOtp(String mobile) async {
+    final response = await http.post(
+      Uri.parse('http://10.0.2.2/capstone/api/send_otp.php'),
+      body: {'mobile': mobile},
+    );
+    final data = jsonDecode(response.body);
+    return data['success'] == true;
+  }
+
+  Future<bool> verifyOtp(String mobile, String otp) async {
+    final response = await http.post(
+      Uri.parse('http://10.0.2.2/capstone/api/verify_otp.php'),
+      body: {'mobile': mobile, 'otp': otp},
+    );
+    final data = jsonDecode(response.body);
+    return data['success'] == true;
+  }
+
+  void _showOtpModal(String mobile) {
+    final otpController = TextEditingController();
+    showGeneralDialog(
+      context: context,
+      barrierDismissible: false,
+      barrierLabel: 'OTP',
+      pageBuilder: (context, anim1, anim2) {
+        return StatefulBuilder(
+          builder: (context, setState) {
+            return Stack(
+              children: [
+                BackdropFilter(
+                  filter: ImageFilter.blur(sigmaX: 6, sigmaY: 6),
+                  child: Container(color: Colors.black.withOpacity(0.2)),
+                ),
+                Center(
+                  child: AlertDialog(
+                    title: Text('OTP Confirmation'),
+                    content: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text('Enter the OTP sent to your mobile number.'),
+                        SizedBox(height: 12),
+                        TextFormField(
+                          controller: otpController,
+                          decoration: InputDecoration(
+                            labelText: 'OTP',
+                            border: OutlineInputBorder(),
+                          ),
+                          keyboardType: TextInputType.number,
+                        ),
+                      ],
+                    ),
+                    actions: [
+                      TextButton(
+                        onPressed: () => Navigator.of(context).pop(),
+                        child: Text('Cancel'),
+                      ),
+                      ElevatedButton(
+                        onPressed: () async {
+                          bool verified = await verifyOtp(
+                            mobile,
+                            otpController.text.trim(),
+                          );
+                          if (verified) {
+                            Navigator.of(context).pop();
+                            await registerFarmer();
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text('Invalid OTP. Please try again.'),
+                              ),
+                            );
+                          }
+                        },
+                        child: Text('Confirm'),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            );
+          },
+        );
+      },
+    );
+  }
+
   Future<void> registerFarmer() async {
     final url = Uri.parse('http://10.0.2.2/capstone/api/register_farmer.php');
     final response = await http.post(
@@ -134,16 +221,16 @@ class _SignupScreenState extends State<SignupScreen> {
                   SizedBox(height: 18),
                   _buildLabel('Mobile Number'),
                   _buildTextField(
-                    hint: '09XXXXXXXXX',
+                    hint: '+639XXXXXXXXX or 09XXXXXXXXX',
                     onChanged: (val) => setState(() => mobile = val),
-                    keyboardType: TextInputType.number,
-                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                    keyboardType: TextInputType.phone,
+                    // Allow + and digits
                     validator: (val) {
                       if (val == null || val.isEmpty) {
                         return 'Mobile number is required';
                       }
-                      if (!RegExp(r'^\d{11}$').hasMatch(val)) {
-                        return 'Mobile number must be exactly 11 digits';
+                      if (!RegExp(r'^\+?\d{9,}$').hasMatch(val)) {
+                        return 'Mobile number must be at least 9 digits and may start with +';
                       }
                       return null;
                     },
@@ -163,6 +250,15 @@ class _SignupScreenState extends State<SignupScreen> {
                       ),
                       onPressed: () async {
                         if (_formKey.currentState!.validate()) {
+                          // OTP logic commented out for testing:
+                          // bool otpSent = await sendOtp(mobile);
+                          // if (otpSent) {
+                          //   _showOtpModal(mobile);
+                          // } else {
+                          //   ScaffoldMessenger.of(context).showSnackBar(
+                          //     SnackBar(content: Text('Failed to send OTP.')),
+                          //   );
+                          // }
                           await registerFarmer();
                         }
                       },

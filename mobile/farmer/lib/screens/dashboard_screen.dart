@@ -1,19 +1,30 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
+import 'dart:io';
+import 'package:image_picker/image_picker.dart';
 import 'track_screen.dart';
 import 'request_screen.dart';
 import 'settings_screen.dart';
+import 'support_screen.dart'; // Import SupportScreen
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class DashboardScreen extends StatefulWidget {
   final bool isVerified;
-  const DashboardScreen({super.key, this.isVerified = true});
+  final String username; // Add username field
+  const DashboardScreen({
+    super.key,
+    this.isVerified = true,
+    required this.username,
+  });
 
   @override
   _DashboardScreenState createState() => _DashboardScreenState();
 }
 
 class _DashboardScreenState extends State<DashboardScreen> {
+  int? farmerId;
+
   @override
   void initState() {
     super.initState();
@@ -53,139 +64,17 @@ class _DashboardScreenState extends State<DashboardScreen> {
         );
       });
     } else {
-      // Show information modal after verification
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        showInformationModal(context);
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
+        // Fetch farmerId using username
+        final user = await fetchUser(widget.username);
+        if (user != null && mounted) {
+          setState(() {
+            farmerId = user['id'];
+          });
+        }
+        _showInformationModal();
       });
     }
-  }
-
-  void showInformationModal(BuildContext context) {
-    final _formKey = GlobalKey<FormState>();
-    String landSize = '';
-    String address = '';
-    String coopGroup = '';
-    bool isLoading = false;
-
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (context) {
-        return StatefulBuilder(
-          builder: (context, setState) {
-            return AlertDialog(
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
-              title: Row(
-                children: [
-                  Icon(Icons.info_outline, color: Color(0xFF2ca58d)),
-                  SizedBox(width: 8),
-                  Text('Complete Your Information'),
-                ],
-              ),
-              content: ConstrainedBox(
-                constraints: BoxConstraints(
-                  maxWidth: 350, // Responsive max width for mobile
-                ),
-                child: Form(
-                  key: _formKey,
-                  child: SingleChildScrollView(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        TextFormField(
-                          decoration: InputDecoration(
-                            labelText: 'Land Size (hectares)',
-                            prefixIcon: Icon(Icons.landscape),
-                            border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
-                          ),
-                          keyboardType: TextInputType.number,
-                          onSaved: (val) => landSize = val ?? '',
-                          validator: (val) => val == null || val.isEmpty ? 'Required' : null,
-                        ),
-                        SizedBox(height: 16),
-                        TextFormField(
-                          decoration: InputDecoration(
-                            labelText: 'Address',
-                            prefixIcon: Icon(Icons.home),
-                            border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
-                          ),
-                          onSaved: (val) => address = val ?? '',
-                          validator: (val) => val == null || val.isEmpty ? 'Required' : null,
-                        ),
-                        SizedBox(height: 16),
-                        TextFormField(
-                          decoration: InputDecoration(
-                            labelText: 'Coop Group',
-                            prefixIcon: Icon(Icons.group),
-                            border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
-                          ),
-                          onSaved: (val) => coopGroup = val ?? '',
-                          validator: (val) => val == null || val.isEmpty ? 'Required' : null,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-              actions: [
-                isLoading
-                  ? Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 8.0),
-                      child: CircularProgressIndicator(),
-                    )
-                  : ElevatedButton.icon(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Color(0xFF2ca58d),
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                        padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-                      ),
-                      icon: Icon(Icons.send),
-                      label: Text('Submit', style: TextStyle(fontWeight: FontWeight.bold)),
-                      onPressed: () async {
-                        if (_formKey.currentState?.validate() ?? false) {
-                          _formKey.currentState?.save();
-                          setState(() => isLoading = true);
-                          int farmerId = 1; // Replace with actual farmer ID
-                          await http.post(
-                            Uri.parse('http://10.0.2.2/capstone/api/add_farmer_info.php'), // Change to your actual server URL
-                            body: {
-                              'farmer_id': farmerId.toString(),
-                              'land_size': landSize,
-                              'address': address,
-                              'coop_group': coopGroup,
-                            },
-                          );
-                          setState(() => isLoading = false);
-                          Navigator.of(context).pop();
-                          showDialog(
-                            context: context,
-                            builder: (context) => AlertDialog(
-                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
-                              title: Row(
-                                children: [
-                                  Icon(Icons.check_circle, color: Color(0xFF22c55e)),
-                                  SizedBox(width: 8),
-                                  Text('Success'),
-                                ],
-                              ),
-                              content: Text('Your information has been submitted!'),
-                              actions: [
-                                TextButton(
-                                  onPressed: () => Navigator.of(context).pop(),
-                                  child: Text('OK'),
-                                ),
-                              ],
-                            ),
-                          );
-                        }
-                      },
-                    ),
-              ],
-            );
-          },
-        );
-      },
-    );
   }
 
   Widget _summaryItem(
@@ -343,22 +232,52 @@ class _DashboardScreenState extends State<DashboardScreen> {
         if (index == 0) {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => DashboardScreen()),
+            MaterialPageRoute(
+              builder: (context) => DashboardScreen(
+                username: widget.username,
+                isVerified: widget.isVerified,
+              ),
+            ),
           );
         } else if (index == 1) {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => TrackScreen()),
+            MaterialPageRoute(
+              builder: (context) => TrackScreen(
+                username: widget.username,
+                isVerified: widget.isVerified,
+              ),
+            ),
           );
         } else if (index == 2) {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => RequestScreen()),
+            MaterialPageRoute(
+              builder: (context) => RequestScreen(
+                username: widget.username,
+                isVerified: widget.isVerified,
+              ),
+            ),
           );
         } else if (index == 3) {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => SettingsScreen()),
+            MaterialPageRoute(
+              builder: (context) => SettingsScreen(
+                username: widget.username,
+                isVerified: widget.isVerified,
+              ),
+            ),
+          );
+        } else if (index == 4) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => SupportScreen(
+                username: widget.username,
+                isVerified: widget.isVerified,
+              ),
+            ),
           );
         } else {
           setState(() {
@@ -382,6 +301,288 @@ class _DashboardScreenState extends State<DashboardScreen> {
         ],
       ),
     );
+  }
+
+  void _showInformationModal() {
+    showGeneralDialog(
+      context: context,
+      barrierDismissible: true,
+      barrierLabel: 'Information',
+      pageBuilder: (context, anim1, anim2) {
+        int modalTab = 0;
+        final provinceController = TextEditingController();
+        final cityController = TextEditingController();
+        final barangayController = TextEditingController();
+        final streetController = TextEditingController();
+        final landSizeController = TextEditingController();
+        final otherInfoController = TextEditingController();
+        File? pickedImage;
+        final ImagePicker picker = ImagePicker();
+        return StatefulBuilder(
+          builder: (context, setState) {
+            bool canGoNext =
+                landSizeController.text.trim().isNotEmpty &&
+                provinceController.text.trim().isNotEmpty &&
+                cityController.text.trim().isNotEmpty &&
+                barangayController.text.trim().isNotEmpty &&
+                streetController.text.trim().isNotEmpty &&
+                double.tryParse(landSizeController.text.trim()) != null;
+            return Stack(
+              children: [
+                BackdropFilter(
+                  filter: ImageFilter.blur(sigmaX: 6, sigmaY: 6),
+                  child: Container(color: Colors.black.withOpacity(0.2)),
+                ),
+                Center(
+                  child: Dialog(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints(
+                        maxHeight: MediaQuery.of(context).size.height * 0.7,
+                        maxWidth: 350,
+                      ),
+                      child: SingleChildScrollView(
+                        child: Padding(
+                          padding: const EdgeInsets.all(20.0),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                'Farmer Information',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18,
+                                ),
+                              ),
+                              SizedBox(height: 18),
+                              if (modalTab == 0) ...[
+                                // Land Size field above location fields
+                                TextFormField(
+                                  controller: landSizeController,
+                                  decoration: InputDecoration(
+                                    labelText: 'Land Size (hectares)',
+                                    border: OutlineInputBorder(),
+                                  ),
+                                  keyboardType: TextInputType.number,
+                                  onChanged: (value) {
+                                    // Only allow numbers and decimals
+                                    if (value.isNotEmpty &&
+                                        double.tryParse(value) == null) {
+                                      landSizeController.text = value
+                                          .replaceAll(RegExp(r'[^0-9.]'), '');
+                                      landSizeController.selection =
+                                          TextSelection.fromPosition(
+                                            TextPosition(
+                                              offset: landSizeController
+                                                  .text
+                                                  .length,
+                                            ),
+                                          );
+                                    }
+                                    setState(() {});
+                                  },
+                                ),
+                                SizedBox(height: 16),
+                                // Location fill-up fields
+                                TextFormField(
+                                  controller: provinceController,
+                                  decoration: InputDecoration(
+                                    labelText: 'Province',
+                                    border: OutlineInputBorder(),
+                                  ),
+                                  onChanged: (_) => setState(() {}),
+                                ),
+                                SizedBox(height: 12),
+                                TextFormField(
+                                  controller: cityController,
+                                  decoration: InputDecoration(
+                                    labelText: 'City/Municipality',
+                                    border: OutlineInputBorder(),
+                                  ),
+                                  onChanged: (_) => setState(() {}),
+                                ),
+                                SizedBox(height: 12),
+                                TextFormField(
+                                  controller: barangayController,
+                                  decoration: InputDecoration(
+                                    labelText: 'Barangay',
+                                    border: OutlineInputBorder(),
+                                  ),
+                                  onChanged: (_) => setState(() {}),
+                                ),
+                                SizedBox(height: 12),
+                                TextFormField(
+                                  controller: streetController,
+                                  decoration: InputDecoration(
+                                    labelText: 'Street/Area',
+                                    border: OutlineInputBorder(),
+                                  ),
+                                  onChanged: (_) => setState(() {}),
+                                ),
+                                SizedBox(height: 24),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    TextButton(
+                                      onPressed: () =>
+                                          Navigator.of(context).pop(),
+                                      child: Text('Cancel'),
+                                    ),
+                                    SizedBox(width: 8),
+                                    ElevatedButton(
+                                      onPressed: canGoNext
+                                          ? () => setState(() => modalTab = 1)
+                                          : null,
+                                      child: Text('Next'),
+                                    ),
+                                  ],
+                                ),
+                              ] else ...[
+                                // Only show Other Info tab and Save button
+                                TextFormField(
+                                  controller: otherInfoController,
+                                  decoration: InputDecoration(
+                                    labelText: 'Other Information',
+                                    border: OutlineInputBorder(),
+                                  ),
+                                  maxLines: 3,
+                                ),
+                                SizedBox(height: 16),
+                                // Image upload button and preview
+                                if (pickedImage != null)
+                                  Container(
+                                    margin: EdgeInsets.only(bottom: 10),
+                                    height: 120,
+                                    width: 120,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(12),
+                                      image: DecorationImage(
+                                        image: FileImage(pickedImage!),
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                  ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    ElevatedButton.icon(
+                                      icon: Icon(Icons.photo_library),
+                                      label: Text('Gallery'),
+                                      style: ElevatedButton.styleFrom(
+                                        backgroundColor: Color(0xFF2563eb),
+                                        foregroundColor: Colors.white,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(
+                                            8,
+                                          ),
+                                        ),
+                                      ),
+                                      onPressed: () async {
+                                        final picked = await picker.pickImage(
+                                          source: ImageSource.gallery,
+                                        );
+                                        if (picked != null) {
+                                          setState(() {
+                                            pickedImage = File(picked.path);
+                                          });
+                                        }
+                                      },
+                                    ),
+                                    SizedBox(width: 12),
+                                    ElevatedButton.icon(
+                                      icon: Icon(Icons.camera_alt),
+                                      label: Text('Camera'),
+                                      style: ElevatedButton.styleFrom(
+                                        backgroundColor: Color(0xFF2563eb),
+                                        foregroundColor: Colors.white,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(
+                                            8,
+                                          ),
+                                        ),
+                                      ),
+                                      onPressed: () async {
+                                        final picked = await picker.pickImage(
+                                          source: ImageSource.camera,
+                                        );
+                                        if (picked != null) {
+                                          setState(() {
+                                            pickedImage = File(picked.path);
+                                          });
+                                        }
+                                      },
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: 16),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    TextButton(
+                                      onPressed: () =>
+                                          Navigator.of(context).pop(),
+                                      child: Text('Cancel'),
+                                    ),
+                                    SizedBox(width: 8),
+                                    ElevatedButton(
+                                      onPressed:
+                                          pickedImage != null &&
+                                              farmerId != null
+                                          ? () async {
+                                              await saveFarmerInfo(
+                                                farmerId: farmerId!,
+                                                landSize: landSizeController
+                                                    .text
+                                                    .trim(),
+                                                province: provinceController
+                                                    .text
+                                                    .trim(),
+                                                city: cityController.text
+                                                    .trim(),
+                                                barangay: barangayController
+                                                    .text
+                                                    .trim(),
+                                                street: streetController.text
+                                                    .trim(),
+                                                otherInfo: otherInfoController
+                                                    .text
+                                                    .trim(),
+                                                imageFile: pickedImage,
+                                              );
+                                              Navigator.of(context).pop();
+                                            }
+                                          : null,
+                                      child: Text('Save'),
+                                    ),
+                                  ],
+                                ),
+                              ], // end else
+                            ], // end children
+                          ), // end Column
+                        ), // end Padding
+                      ), // end SingleChildScrollView
+                    ), // end ConstrainedBox
+                  ), // end Dialog
+                ), // end Center
+              ], // end children
+            ); // end Stack
+          },
+        );
+      },
+    );
+  }
+
+  Future<Map<String, dynamic>?> fetchUser(String username) async {
+    final response = await http.get(
+      Uri.parse('http://10.0.2.2/capstone/api/get_user.php?username=$username'),
+    );
+    final data = jsonDecode(response.body);
+    if (data['success'] == true) {
+      return data['user'];
+    }
+    return null;
   }
 
   @override
@@ -452,6 +653,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   ],
                 ),
               ),
+              SizedBox(height: 8),
               // Removed 'Active' and 'This Month' dashboard cards
               SizedBox(height: 24),
               // Quick Actions Grid
@@ -875,5 +1077,47 @@ class _DashboardScreenState extends State<DashboardScreen> {
         Text(label, style: TextStyle(fontSize: 13)),
       ],
     );
+  }
+
+  // Add this function to your file if not present:
+  Future<void> saveFarmerInfo({
+    required int farmerId,
+    required String landSize,
+    required String province,
+    required String city,
+    required String barangay,
+    required String street,
+    required String otherInfo,
+    File? imageFile,
+  }) async {
+    var uri = Uri.parse('http://10.0.2.2/capstone/api/add_farmer_info.php');
+    var request = http.MultipartRequest('POST', uri);
+
+    request.fields['farmer_id'] = farmerId.toString();
+    request.fields['land_size'] = landSize;
+    request.fields['province'] = province;
+    request.fields['city'] = city;
+    request.fields['barangay'] = barangay;
+    request.fields['street'] = street;
+    request.fields['other_info'] = otherInfo;
+
+    if (imageFile != null) {
+      request.files.add(
+        await http.MultipartFile.fromPath('image', imageFile.path),
+      );
+    }
+
+    var response = await request.send();
+    if (response.statusCode == 200) {
+      var respStr = await response.stream.bytesToString();
+      var result = jsonDecode(respStr);
+      if (result['success'] == true) {
+        // Success: show confirmation or navigate
+      } else {
+        // Error: show result['error']
+      }
+    } else {
+      // Error: show response.statusCode
+    }
   }
 }

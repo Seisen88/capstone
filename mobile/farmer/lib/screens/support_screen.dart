@@ -5,7 +5,13 @@ import 'request_screen.dart';
 import 'settings_screen.dart';
 
 class SupportScreen extends StatelessWidget {
-  const SupportScreen({super.key});
+  final String username;
+  final bool isVerified;
+  const SupportScreen({
+    super.key,
+    required this.username,
+    required this.isVerified,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -50,23 +56,27 @@ class SupportScreen extends StatelessWidget {
                 _buildChatBubble(
                   isUser: false,
                   time: '10:00 AM',
-                  text: "Hello! I'm your AI assistant. I can help you with seed allocation queries, subsidy information, and general support. How can I assist you today?",
+                  text:
+                      "Hello! I'm your AI assistant. I can help you with seed allocation queries, subsidy information, and general support. How can I assist you today?",
                 ),
                 _buildChatBubble(
                   isUser: true,
                   time: '10:02 AM',
-                  text: "I need help with my seed allocation request REQ-2025-001. It's been in transit for 3 days.",
+                  text:
+                      "I need help with my seed allocation request REQ-2025-001. It's been in transit for 3 days.",
                 ),
                 _buildChatBubble(
                   isUser: false,
                   time: '10:03 AM',
-                  text: "I can help you track that request. Let me connect you with a support agent who can provide real-time updates.",
+                  text:
+                      "I can help you track that request. Let me connect you with a support agent who can provide real-time updates.",
                 ),
                 _buildChatBubble(
                   isUser: false,
                   isSupport: true,
                   time: '10:05 AM',
-                  text: "Hi! I'm Sarah from the support team. I can see your request REQ-2025-001 for 50kg Rice IR64. It's currently in transit with tracking ID TRK123456. Expected delivery is tomorrow morning.",
+                  text:
+                      "Hi! I'm Sarah from the support team. I can see your request REQ-2025-001 for 50kg Rice IR64. It's currently in transit with tracking ID TRK123456. Expected delivery is tomorrow morning.",
                   attachment: 'delivery_tracking.pdf',
                 ),
               ],
@@ -117,12 +127,14 @@ class SupportScreen extends StatelessWidget {
     required String text,
     String? attachment,
   }) {
-    final alignment = isUser ? CrossAxisAlignment.end : CrossAxisAlignment.start;
+    final alignment = isUser
+        ? CrossAxisAlignment.end
+        : CrossAxisAlignment.start;
     final color = isUser
         ? Colors.blue[700]
         : isSupport
-            ? Colors.green[50]
-            : Colors.grey[200];
+        ? Colors.green[50]
+        : Colors.grey[200];
     final textColor = isUser ? Colors.white : Colors.black87;
     return Column(
       crossAxisAlignment: alignment,
@@ -176,29 +188,62 @@ class SupportScreen extends StatelessWidget {
       type: BottomNavigationBarType.fixed,
       currentIndex: 3, // Support tab
       onTap: (index) {
-        switch (index) {
-          case 0:
-            Navigator.push(context, MaterialPageRoute(builder: (context) => DashboardScreen()));
-            break;
-          case 1:
-            Navigator.push(context, MaterialPageRoute(builder: (context) => TrackScreen()));
-            break;
-          case 2:
-            Navigator.push(context, MaterialPageRoute(builder: (context) => RequestScreen()));
-            break;
-          case 3:
-            // Already on Support
-            break;
-          case 4:
-            Navigator.push(context, MaterialPageRoute(builder: (context) => SettingsScreen()));
-            break;
+        if (index == 0) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) =>
+                  DashboardScreen(username: username, isVerified: isVerified),
+            ),
+          );
+        } else if (index == 1) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) =>
+                  TrackScreen(username: username, isVerified: isVerified),
+            ),
+          );
+        } else if (index == 2) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) =>
+                  RequestScreen(username: username, isVerified: isVerified),
+            ),
+          );
+        } else if (index == 3) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) =>
+                  SettingsScreen(username: username, isVerified: isVerified),
+            ),
+          );
+        } else if (index == 4) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) =>
+                  SupportScreen(username: username, isVerified: isVerified),
+            ),
+          );
         }
       },
       items: [
-        BottomNavigationBarItem(icon: Icon(Icons.dashboard), label: 'Dashboard'),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.dashboard),
+          label: 'Dashboard',
+        ),
         BottomNavigationBarItem(icon: Icon(Icons.timeline), label: 'Track'),
-        BottomNavigationBarItem(icon: Icon(Icons.shopping_cart), label: 'Request'),
-        BottomNavigationBarItem(icon: Icon(Icons.support_agent), label: 'Support'),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.shopping_cart),
+          label: 'Request',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.support_agent),
+          label: 'Support',
+        ),
         BottomNavigationBarItem(icon: Icon(Icons.settings), label: 'Settings'),
       ],
     );

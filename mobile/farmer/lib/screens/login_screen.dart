@@ -123,6 +123,7 @@ class LoginScreen extends StatelessWidget {
                             MaterialPageRoute(
                               builder: (context) => DashboardScreen(
                                 isVerified: data['is_verified'] == 1,
+                                username: username, // Pass username
                               ),
                             ),
                           );
