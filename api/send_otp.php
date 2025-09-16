@@ -27,7 +27,7 @@ $send_data = [];
 $send_data['sender_id'] = "PhilSMS"; // or your registered sender ID
 $send_data['recipient'] = $mobile; // must be in +63 format
 $send_data['message'] = "Your OTP code is: $otp";
-$token = "2621|VJe3qdRVAwvgwlILVJrlq8kusRoklJo5J4ij953e"; // Use your provided token
+$token = "2621|VJe3qdRVAwvgwlILVJrlq8kusRoklJo5J4ij953e"; // Replace with your actual token
 
 $parameters = json_encode($send_data);
 $ch = curl_init();
@@ -51,6 +51,21 @@ if ($http_code == 200 && isset($response['success']) && $response['success']) {
     echo json_encode(['success' => true, 'message' => 'OTP sent successfully']);
 } else {
     $error = isset($response['error']) ? $response['error'] : $get_sms_status;
-    echo json_encode(['success' => false, 'error' => $error]);
+    // Optionally parse error for delivered status as before
+    $delivered = false;
+    if (is_string($error)) {
+        $errorData = json_decode($error, true);
+        if (
+            isset($errorData['status']) && $errorData['status'] === 'success' &&
+            isset($errorData['data']['status']) && $errorData['data']['status'] === 'Delivered'
+        ) {
+            $delivered = true;
+        }
+    }
+    if ($delivered) {
+        echo json_encode(['success' => true, 'message' => 'OTP sent successfully (delivered)']);
+    } else {
+        echo json_encode(['success' => false, 'error' => $error]);
+    }
 }
 ?>

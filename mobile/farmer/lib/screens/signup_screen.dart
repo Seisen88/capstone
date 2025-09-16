@@ -20,7 +20,21 @@ class _SignupScreenState extends State<SignupScreen> {
       body: {'mobile': mobile},
     );
     final data = jsonDecode(response.body);
-    return data['success'] == true;
+    if (data['success'] == true) {
+      return true;
+    } else if (data['error'] != null) {
+      try {
+        final errorData = jsonDecode(data['error']);
+        if (errorData['status'] == 'success' &&
+            errorData['data'] != null &&
+            errorData['data']['status'] == 'Delivered') {
+          return true;
+        }
+      } catch (e) {
+        // ignore parse error
+      }
+    }
+    return false;
   }
 
   Future<bool> verifyOtp(String mobile, String otp) async {
@@ -250,16 +264,14 @@ class _SignupScreenState extends State<SignupScreen> {
                       ),
                       onPressed: () async {
                         if (_formKey.currentState!.validate()) {
-                          // OTP logic commented out for testing:
-                          // bool otpSent = await sendOtp(mobile);
-                          // if (otpSent) {
-                          //   _showOtpModal(mobile);
-                          // } else {
-                          //   ScaffoldMessenger.of(context).showSnackBar(
-                          //     SnackBar(content: Text('Failed to send OTP.')),
-                          //   );
-                          // }
-                          await registerFarmer();
+                          bool otpSent = await sendOtp(mobile);
+                          if (otpSent) {
+                            _showOtpModal(mobile);
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text('Failed to send OTP.')),
+                            );
+                          }
                         }
                       },
                       child: Text(
@@ -325,6 +337,7 @@ class _SignupScreenState extends State<SignupScreen> {
     );
   }
 
+  final otpController = TextEditingController();
   Widget _buildTextField({
     required String hint,
     required Function(String) onChanged,
