@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 09, 2025 at 01:41 PM
+-- Generation Time: Sep 16, 2025 at 06:15 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -39,16 +39,45 @@ CREATE TABLE `farmer` (
   `verification_date` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+-- --------------------------------------------------------
+
 --
--- Dumping data for table `farmer`
+-- Table structure for table `information`
 --
 
-INSERT INTO `farmer` (`id`, `username`, `first_name`, `last_name`, `password`, `mobile`, `is_verified`, `sign_up_date`, `verification_date`) VALUES
-(2, 'zandrix', 'zandrix', 'pongos', '$2y$10$xsm4ufHq77YguIqJvi4OSeGk0xjCd.MplGQELhKMv7HuU8c.jWBZa', '09304300733', 1, '2025-09-07 23:59:31', '2025-09-07 23:59:54'),
-(3, 'bryan', 'bryan', 'altura', '$2y$10$2u6hsHSRrJI7J/ExZk.xJeBnm0z9dzQPyCqT1puh/YJUUdpwMf7rC', '09230939123912', 1, '2025-09-08 00:03:47', '2025-09-08 00:03:58'),
-(4, 'hello', 'hello', 'hello', '$2y$10$ZVe8pVTuoqQLK3ZVSwVoY.jViSxNl7thwiA9635pmeqvV7oaxj7be', '123123123', 1, '2025-09-08 00:23:27', '2025-09-08 00:23:30'),
-(5, 'hi', 'hi', 'hi', '$2y$10$fSjB626X7ive9teo/E.TV.BngMI17Vd4K8RTDfp4M0o2cqkc/xlki', '9239293912', 1, '2025-09-08 00:24:27', '2025-09-08 00:24:37'),
-(6, 'awdaw', 'awd', 'awddaw', '$2y$10$5nuj5RakxzZNHdF3IAGg9erR/xnEnpQoyrOJmt6sb2c/2Ny/zDGyK', 'awdaw', 0, '2025-09-08 00:31:08', NULL);
+CREATE TABLE `information` (
+  `id` int(11) NOT NULL,
+  `farmer_id` int(11) NOT NULL,
+  `land_size` float DEFAULT NULL,
+  `province` varchar(100) DEFAULT NULL,
+  `city` varchar(100) DEFAULT NULL,
+  `barangay` varchar(100) DEFAULT NULL,
+  `street` varchar(100) DEFAULT NULL,
+  `other_info` text DEFAULT NULL,
+  `image` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `otp_verification`
+--
+
+CREATE TABLE `otp_verification` (
+  `mobile` varchar(20) NOT NULL,
+  `otp` varchar(6) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `otp_verification`
+--
+
+INSERT INTO `otp_verification` (`mobile`, `otp`, `created_at`) VALUES
+('+63912262722', '599642', '2025-09-16 16:12:04'),
+('+639304300733', '651850', '2025-09-16 15:33:46'),
+('+639912262722', '208313', '2025-09-16 16:12:12'),
+('639304300733', '232137', '2025-09-16 15:25:28');
 
 -- --------------------------------------------------------
 
@@ -84,6 +113,19 @@ ALTER TABLE `farmer`
   ADD UNIQUE KEY `username` (`username`);
 
 --
+-- Indexes for table `information`
+--
+ALTER TABLE `information`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `farmer_id` (`farmer_id`);
+
+--
+-- Indexes for table `otp_verification`
+--
+ALTER TABLE `otp_verification`
+  ADD PRIMARY KEY (`mobile`);
+
+--
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
@@ -98,13 +140,29 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `farmer`
 --
 ALTER TABLE `farmer`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+
+--
+-- AUTO_INCREMENT for table `information`
+--
+ALTER TABLE `information`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `information`
+--
+ALTER TABLE `information`
+  ADD CONSTRAINT `information_ibfk_1` FOREIGN KEY (`farmer_id`) REFERENCES `farmer` (`id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
