@@ -30,11 +30,11 @@ body {
     color: #fff;
     display: flex;
     align-items: center;
-    gap: 12px;
-    font-size: 18px;
-    padding: 12px 24px;
+    gap: 8px !important;
+    font-size: 16px;
+    padding: 8px 18px !important;
     text-decoration: none;
-    margin-bottom: 8px;
+    margin-bottom: 6px !important;
     transition: background 0.2s;
 }
 .main-menu a.active,
@@ -50,25 +50,23 @@ body {
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    gap: 12px;
-    font-size: 18px;
-    padding: 12px 24px;
+    gap: 8px !important;
+    font-size: 16px;
+    padding: 8px 18px !important;
     color: #fff;
     text-decoration: none;
     cursor: pointer;
     background: #2fb19b;
-    border-radius: 8px;
 }
 
 /* Ensure Farmer text is left-aligned and arrow is on the right */
 .sidebar-collapsible > a .farmer-label {
     flex: 0 1 auto;
     text-align: left;
-    margin-left: 8px;
 }
 .sidebar-collapsible > a .collapse-arrow {
-    margin-left: 18px;
-    font-size: 8px;
+    margin-left: 12px !important;
+    font-size: 10px !important;
     line-height: 1;
 }
 
@@ -87,39 +85,33 @@ body {
 .sidebar-submenu {
     display: none;
     flex-direction: column;
-    background: #21897e;
-    border-radius: 8px;
-    margin: 0 16px 8px 16px;
-    box-shadow: 0 2px 8px rgba(44,165,141,0.08);
-    padding: 4px 0;
+    padding: 10px 0;
 }
 .sidebar-submenu a.subtab {
     color: #fff;
-    padding: 8px 20px;
-    font-size: 13px !important;
+    padding-left: 32px !important;
+    font-size: 15px;
     text-decoration: none;
-    border-radius: 6px;
     margin: 2px 0;
     transition: background 0.2s;
     cursor: pointer;
 }
 .sidebar-submenu a.subtab.active,
 .sidebar-submenu a.subtab:hover {
-    background: #4ad991;
-    color: #232946;
+    color: #ffffff;
 }
 .tab-content { display: none; }
 .tab-content.active { display: block; }
 .main-menu .icon {
-    width: 28px;
-    height: 28px;
+    width: 20px !important;
+    height: 20px !important;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 .main-menu .icon img {
-    width: 24px;
-    height: 24px;
+    width: 16px !important;
+    height: 16px !important;
     display: block;
 }
 /* Sidebar Section (user avatar, name, role, buttons) */
@@ -169,7 +161,6 @@ body {
     border: 1px solid #ef4444;
 }
 .account-menu a:hover {
-    background: #232946;
     color: #4ad991;
 }
 .main-content {

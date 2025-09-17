@@ -81,8 +81,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_id'])) {
           <span class="collapse-arrow">&#9662;</span>
         </a>
         <div class="sidebar-submenu" id="farmer-submenu">
-          <a href="#" class="subtab active" onclick="showTab('verification')">Verification Log</a>
-          <a href="#" class="subtab" onclick="showTab('info')">Information Log</a>
+          <a href="#" class="subtab active" onclick="showTab('verification')">Verification</a>
+          <a href="#" class="subtab" onclick="showTab('info')">Information</a>
         </div>
       </div>
             <a href="#">
@@ -257,4 +257,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_id'])) {
 .sort-btn.down svg {
   transform: rotate(180deg);
 } 
+/* Green background for all table headers */
+.farmer-table th {
+  background-color: #e6f9ed !important;
+  color: #1a7f37 !important;
+  font-weight: bold;
+}
 </style>

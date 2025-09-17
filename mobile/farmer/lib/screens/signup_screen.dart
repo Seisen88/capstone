@@ -16,7 +16,7 @@ class SignupScreen extends StatefulWidget {
 class _SignupScreenState extends State<SignupScreen> {
   Future<bool> sendOtp(String mobile) async {
     final response = await http.post(
-      Uri.parse('http://10.0.2.2/capstone/api/send_otp.php'),
+      Uri.parse('http://127.0.0.1/capstone/api/send_otp.php'),
       body: {'mobile': mobile},
     );
     final data = jsonDecode(response.body);
@@ -39,7 +39,7 @@ class _SignupScreenState extends State<SignupScreen> {
 
   Future<bool> verifyOtp(String mobile, String otp) async {
     final response = await http.post(
-      Uri.parse('http://10.0.2.2/capstone/api/verify_otp.php'),
+      Uri.parse('http://127.0.0.1/capstone/api/verify_otp.php'),
       body: {'mobile': mobile, 'otp': otp},
     );
     final data = jsonDecode(response.body);
@@ -115,7 +115,7 @@ class _SignupScreenState extends State<SignupScreen> {
   }
 
   Future<void> registerFarmer() async {
-    final url = Uri.parse('http://10.0.2.2/capstone/api/register_farmer.php');
+    final url = Uri.parse('http://127.0.0.1/capstone/api/register_farmer.php');
     final response = await http.post(
       url,
       headers: {'Content-Type': 'application/json'},

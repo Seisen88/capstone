@@ -520,11 +520,11 @@ body {
     color: #fff;
     display: flex;
     align-items: center;
-    gap: 12px;
-    font-size: 18px;
-    padding: 12px 24px;
+    gap: 8px !important;
+    font-size: 18px !important;
+    padding: 8px 18px !important;
+    margin-bottom: 6px !important;
     text-decoration: none;
-    margin-bottom: 8px;
     transition: background 0.2s;
 }
 
@@ -534,16 +534,12 @@ body {
 }
 
 .main-menu .icon {
-    width: 28px;
-    height: 28px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    width: 20px !important;
+    height: 20px !important;
 }
 .main-menu .icon img {
-    width: 24px;
-    height: 24px;
-    display: block;
+    width: 16px !important;
+    height: 16px !important;
 }
 
 /* Sidebar Section */
@@ -918,3 +914,31 @@ body {
     background: none;
     padding: 0 24px;
 }
+
+/* --- Sidebar tab and icon size override for dashboard --- */
+/* Sidebar tab and icon size override for dashboard - unified */
+.main-menu a,
+.sidebar-collapsible > a {
+    font-size: 16px !important;
+    gap: 8px !important;
+    padding: 8px 18px !important;
+    margin-bottom: 6px !important;
+}
+.main-menu .icon,
+.sidebar-collapsible .icon {
+    width: 20px !important;
+    height: 20px !important;
+}
+.main-menu .icon img,
+.sidebar-collapsible .icon img {
+    width: 16px !important;
+    height: 16px !important;
+}
+.sidebar-collapsible > a .farmer-label {
+    margin-left: 6px !important;
+}
+.sidebar-collapsible > a .collapse-arrow {
+    margin-left: 12px !important;
+    font-size: 10px !important;
+}
+/* --- End sidebar tab and icon size override for dashboard --- */

@@ -106,7 +106,7 @@ class LoginScreen extends StatelessWidget {
                     onPressed: () async {
                       if (formKey.currentState!.validate()) {
                         final url = Uri.parse(
-                          'http://10.0.2.2/capstone/api/login_farmer.php',
+                          'http://127.0.0.1/capstone/api/login_farmer.php',
                         );
                         final response = await http.post(
                           url,

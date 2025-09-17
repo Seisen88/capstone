@@ -8,6 +8,7 @@ import 'settings_screen.dart';
 import 'support_screen.dart'; // Import SupportScreen
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 class DashboardScreen extends StatefulWidget {
   final bool isVerified;
@@ -28,7 +29,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   Future<bool> checkFarmerInfo(int farmerId) async {
     final response = await http.get(
       Uri.parse(
-        'http://10.0.2.2/capstone/api/check_farmer_info.php?farmer_id=$farmerId',
+        'http://127.0.0.1/capstone/api/check_farmer_info.php?farmer_id=$farmerId',
       ),
     );
     final data = jsonDecode(response.body);
@@ -330,7 +331,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         final streetController = TextEditingController();
         final landSizeController = TextEditingController();
         final otherInfoController = TextEditingController();
-        File? pickedImage;
+        dynamic pickedImage; // File for mobile, XFile for web
         final ImagePicker picker = ImagePicker();
         return StatefulBuilder(
           builder: (context, setState) {
@@ -466,18 +467,29 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                 SizedBox(height: 16),
                                 // Image upload button and preview
                                 if (pickedImage != null)
-                                  Container(
-                                    margin: EdgeInsets.only(bottom: 10),
-                                    height: 120,
-                                    width: 120,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(12),
-                                      image: DecorationImage(
-                                        image: FileImage(pickedImage!),
+                                  if (!kIsWeb)
+                                    Container(
+                                      margin: EdgeInsets.only(bottom: 10),
+                                      height: 120,
+                                      width: 120,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(12),
+                                        image: DecorationImage(
+                                          image: FileImage(pickedImage!),
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                    )
+                                  else
+                                    Container(
+                                      margin: EdgeInsets.only(bottom: 10),
+                                      height: 120,
+                                      width: 120,
+                                      child: Image.network(
+                                        pickedImage.path,
                                         fit: BoxFit.cover,
                                       ),
                                     ),
-                                  ),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
@@ -499,7 +511,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                         );
                                         if (picked != null) {
                                           setState(() {
-                                            pickedImage = File(picked.path);
+                                            pickedImage = kIsWeb
+                                                ? picked
+                                                : File(picked.path);
                                           });
                                         }
                                       },
@@ -523,7 +537,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                         );
                                         if (picked != null) {
                                           setState(() {
-                                            pickedImage = File(picked.path);
+                                            pickedImage = kIsWeb
+                                                ? picked
+                                                : File(picked.path);
                                           });
                                         }
                                       },
@@ -590,7 +606,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   Future<Map<String, dynamic>?> fetchUser(String username) async {
     final response = await http.get(
-      Uri.parse('http://10.0.2.2/capstone/api/get_user.php?username=$username'),
+      Uri.parse(
+        'http://127.0.0.1/capstone/api/get_user.php?username=$username',
+      ),
     );
     final data = jsonDecode(response.body);
     if (data['success'] == true) {
@@ -1102,9 +1120,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
     required String barangay,
     required String street,
     required String otherInfo,
-    File? imageFile,
+    dynamic imageFile, // File for mobile, XFile for web
   }) async {
-    var uri = Uri.parse('http://10.0.2.2/capstone/api/add_farmer_info.php');
+    var uri = Uri.parse('http://127.0.0.1/capstone/api/add_farmer_info.php');
     var request = http.MultipartRequest('POST', uri);
 
     request.fields['farmer_id'] = farmerId.toString();
@@ -1116,9 +1134,20 @@ class _DashboardScreenState extends State<DashboardScreen> {
     request.fields['other_info'] = otherInfo;
 
     if (imageFile != null) {
-      request.files.add(
-        await http.MultipartFile.fromPath('image', imageFile.path),
-      );
+      if (kIsWeb) {
+        final bytes = await imageFile.readAsBytes();
+        request.files.add(
+          http.MultipartFile.fromBytes(
+            'image',
+            bytes,
+            filename: imageFile.name,
+          ),
+        );
+      } else {
+        request.files.add(
+          await http.MultipartFile.fromPath('image', imageFile.path),
+        );
+      }
     }
 
     var response = await request.send();

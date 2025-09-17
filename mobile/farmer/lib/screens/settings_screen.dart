@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'dashboard_screen.dart';
 import 'track_screen.dart';
 import 'request_screen.dart';
+import 'profile_screen.dart';
 
 class SettingsScreen extends StatelessWidget {
   final String username;
@@ -34,14 +35,34 @@ class SettingsScreen extends StatelessWidget {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            _settingsCard(
-              context,
-              Icons.person_outline,
-              'Profile Settings',
-              'Personal information and farmer details',
-              ProfileSettingsScreen(username: username, isVerified: isVerified),
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton.icon(
+                icon: Icon(Icons.person_outline),
+                label: Text('Go to Profile'),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Color(0xFF2563eb),
+                  foregroundColor: Colors.white,
+                  padding: EdgeInsets.symmetric(vertical: 16),
+                  textStyle: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                  ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => ProfileScreen(username: username),
+                    ),
+                  );
+                },
+              ),
             ),
-            SizedBox(height: 16),
+            SizedBox(height: 24),
             _settingsCard(
               context,
               Icons.notifications_none,
@@ -91,7 +112,7 @@ class SettingsScreen extends StatelessWidget {
     IconData icon,
     String title,
     String subtitle,
-    Widget page,
+    Widget? page,
   ) {
     return Card(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
@@ -102,7 +123,9 @@ class SettingsScreen extends StatelessWidget {
         subtitle: Text(subtitle),
         trailing: Icon(Icons.arrow_forward_ios, size: 18),
         onTap: () {
-          Navigator.push(context, MaterialPageRoute(builder: (_) => page));
+          if (page != null) {
+            Navigator.push(context, MaterialPageRoute(builder: (_) => page));
+          }
         },
       ),
     );
@@ -179,126 +202,6 @@ class SettingsScreen extends StatelessWidget {
 }
 
 // Profile Settings Page
-class ProfileSettingsScreen extends StatelessWidget {
-  final String username;
-  final bool isVerified;
-  const ProfileSettingsScreen({
-    super.key,
-    required this.username,
-    required this.isVerified,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Color(0xFFF7F8FA),
-      appBar: AppBar(
-        backgroundColor: Color(0xFF2ca58d),
-        elevation: 0,
-        title: Text('Profile Settings'),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Card(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
-          ),
-          elevation: 0,
-          child: Padding(
-            padding: const EdgeInsets.all(18.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Center(
-                  child: Column(
-                    children: [
-                      CircleAvatar(
-                        radius: 32,
-                        backgroundColor: Color(0xFFbbf7d0),
-                        child: Icon(
-                          Icons.person,
-                          size: 40,
-                          color: Colors.white,
-                        ),
-                      ),
-                      SizedBox(height: 8),
-                      Text(
-                        'Rajesh Kumar',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18,
-                        ),
-                      ),
-                      Text(
-                        'Farmer ID: FRM0001',
-                        style: TextStyle(color: Colors.grey[700], fontSize: 13),
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(height: 18),
-                _profileField('Full Name', 'Rajesh Kumar'),
-                SizedBox(height: 12),
-                _profileField('Phone Number', '+91 98765 43210'),
-                SizedBox(height: 12),
-                _profileField('Email', 'rajesh@example.com'),
-                SizedBox(height: 12),
-                _profileField('Village', 'Kharwa, Fatehpur'),
-                SizedBox(height: 18),
-                SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.black,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      padding: EdgeInsets.symmetric(vertical: 14),
-                    ),
-                    onPressed: () {},
-                    child: Text(
-                      'Save Changes',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _profileField(String label, String value) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          label,
-          style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
-        ),
-        SizedBox(height: 6),
-        TextField(
-          controller: TextEditingController(text: value),
-          decoration: InputDecoration(
-            filled: true,
-            fillColor: Color(0xFFf1f5f9),
-            contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
-              borderSide: BorderSide.none,
-            ),
-            isDense: true,
-          ),
-        ),
-      ],
-    );
-  }
-}
 
 // Notifications Page
 class NotificationsScreen extends StatefulWidget {
